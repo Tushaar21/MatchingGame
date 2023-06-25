@@ -20,6 +20,9 @@ public class Main {
             case 2 -> {
                 System.out.println("game info");
                 ScoreSystem.ScoreBoard();
+                System.out.println("1. The deck consists of a 4x5 grid with 5 duplicates");
+                System.out.println("2. Choose to open 2 cards by selecting the row and column");
+                System.out.println("3. Try to guess all the matching cards");
                 System.out.println();
                 System.out.println("pres 1 to exit");
                 System.out.println("pres 2 to go back");
