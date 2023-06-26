@@ -8,7 +8,7 @@ public class TheGameDefault {
     public static String[][] board = new String[4][5];
     public static String[][] cards = new String[4][5];
     public static Scanner src = new Scanner(System.in);
-
+    //This creates and determines the size of the board
     public static void printBoard() {
 
         for (int i = 0; i < 4; i++) {
@@ -20,7 +20,7 @@ public class TheGameDefault {
             System.out.println();
         }
     }
-
+    //These are the cards added to the board
     public static void shuffleCards() {
         Random random = new Random();
         ArrayList<String> letters = new ArrayList<>();
@@ -46,7 +46,7 @@ public class TheGameDefault {
         letters.add("H");
         letters.add("I");
         letters.add("J");
-
+        //This shuffles the cards
         int index;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
@@ -57,25 +57,16 @@ public class TheGameDefault {
         }
     }
 
-    public static boolean gameOver () {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (board[i][j].equals(" 🎴 ")) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
+    //This is the code of the game itself
     public static void checkInput (String[][]cards){
+        int False = 0;
         while (true) {
-            if (!gameOver()) {
+            if (False < 10) {
                 System.out.print("row-1 : ");
                 int row1 = src.nextInt();
                 System.out.print("column-1 : ");
                 int column1 = src.nextInt();
-
+                // Checks if the card is already open
                 if (!board[row1 - 1][column1 - 1].equals(" 🎴 ")) {
                     System.out.println("Already entered!!!");
                     System.out.println();
@@ -90,7 +81,7 @@ public class TheGameDefault {
                 int row2 = src.nextInt();
                 System.out.print("column-2 : ");
                 int column2 = src.nextInt();
-
+                // Checks if the card is already open
                 if (!board[row2 - 1][column2 - 1].equals(" 🎴 ")) {
                     System.out.println("Already entered!!!");
                     board[row1 - 1][column1 - 1] = " 🎴 ";
@@ -100,7 +91,7 @@ public class TheGameDefault {
                 } else {
                     board[row2 - 1][column2 - 1] = " " + cards[row2 - 1][column2 - 1] + " ";
                     printBoard();
-
+                    //Checks for a matching cards
                     if (board[row1 - 1][column1 - 1].equals(board[row2 - 1][column2 - 1])) {
                         printBoard();
                         System.out.println("Correct!");
@@ -111,6 +102,7 @@ public class TheGameDefault {
                         System.out.println("False!");
                         board[row1 - 1][column1 - 1] = " 🎴 ";
                         board[row2 - 1][column2 - 1] = " 🎴 ";
+                        False = False + 1;
                         ScoreSystem.falseAnswer();
                     }
                 }
@@ -121,7 +113,7 @@ public class TheGameDefault {
             }
         }
     }
-
+    //This is teh start menu for the default game mode
     public static void startMenu(){
         while (true){
             System.out.println(" press e to exit and n for new game");

@@ -12,13 +12,15 @@ public class ScoreSystem {
     static int j = 0;
     static int score;
     static Scanner src = new Scanner(System.in);
-
+    //Score points for matched cards
     public static void correctAnswer(){
         ScoreSystem.i += 1;
     }
+    //Score points for unmatched cards
     public static void falseAnswer(){
         ScoreSystem.j += 1;
     }
+    //Total score
     public static void scoreAnswer(){
         /*1 matched card = 2p
         all matched = 3p + (10 - sum(false))*/
@@ -28,6 +30,7 @@ public class ScoreSystem {
         System.out.println("Total score: " + score);
         ScoreCounter();
     }
+    //Send score to database
     public static void ScoreCounter(){
         try (Connection conn = DriverManager.getConnection(URL,USER, PASS)
         ) {
@@ -46,11 +49,10 @@ public class ScoreSystem {
             e.printStackTrace();
         }
     }
+    //Shows score of the top 10 players
     public static void ScoreBoard(){
         try (Connection conn = DriverManager.getConnection(URL,USER, PASS)
         ) {
-            /*String sql = "SELECT user_score FROM game_info ORDER BY user_score DESC LIMIT 10 "+
-                    "SELECT user_name FROM User_info ORDER BY user_score DESC LIMIT 10";*/
             String sql = "SELECT gam.user_score, gam.user_id, us.user_name " +
                     "FROM game_info gam " +
                     "JOIN User_info us on gam.user_id = us.user_id " +

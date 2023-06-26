@@ -9,7 +9,7 @@ public class TheGameHard {
     public static String[][] board = new String[4][5];
     public static String[][] cards = new String[4][5];
     public static Scanner src = new Scanner(System.in);
-
+    //This creates and determines the size of the board
     public static void printBoard() {
 
         for (int i = 0; i < 4; i++) {
@@ -21,7 +21,7 @@ public class TheGameHard {
             System.out.println();
         }
     }
-
+    //These are the cards added to the board
     public static void shuffleCards() {
         Random random = new Random();
         ArrayList<String> letters = new ArrayList<>();
@@ -47,7 +47,7 @@ public class TheGameHard {
         letters.add("🍔");
         letters.add("🍦");
         letters.add("🎃");
-
+        //This shuffles the cards
         int index;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
@@ -57,59 +57,68 @@ public class TheGameHard {
             }
         }
     }
-
+    //Checks if all the cards are open
+    public static boolean gameOver () {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (board[i][j].equals(" 🎴 ")) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    //This is the code of the game itself
     public static void checkInput(String[][] cards) {
         int False = 0;
         while (true) {
-            if (False < 10) {
-                    System.out.print("row-1 : ");
-                    int row1 = src.nextInt();
-                    System.out.print("column-1 : ");
-                    int column1 = src.nextInt();
+            if (!gameOver()) {
+                System.out.print("row-1 (1-4): ");
+                int row1 = src.nextInt();
+                System.out.print("column-1 (1-5): ");
+                int column1 = src.nextInt();
+                // Checks if the card is already open
+                if (!board[row1 - 1][column1 - 1].equals(" 🎴 ")) {
+                    System.out.println("Already entered!!!");
+                    System.out.println();
 
-                    if (!board[row1 - 1][column1 - 1].equals(" 🎴 ")) {
-                        System.out.println("Already entered!!!");
-                        System.out.println();
-
-                        printBoard();
-                        continue;
-                    } else {
-                        board[row1 - 1][column1 - 1] = " " + cards[row1 - 1][column1 - 1] + " ";
-                        printBoard();
-                    }
-
-                    System.out.print("row-2 : ");
-                    int row2 = src.nextInt();
-                    System.out.print("column-2 : ");
-                    int column2 = src.nextInt();
-
-                    if (!board[row2 - 1][column2 - 1].equals(" 🎴 ")) {
-                        System.out.println("Already entered!!!");
-                        board[row1 - 1][column1 - 1] = " 🎴 ";
-                        System.out.println();
-
-                        printBoard();
-                    } else {
-                        board[row2 - 1][column2 - 1] = " " + cards[row2 - 1][column2 - 1] + " ";
-                        printBoard();
-
-                        if (board[row1 - 1][column1 - 1].equals(board[row2 - 1][column2 - 1])) {
-                            System.out.println();
-                            printBoard();
-                            System.out.println("Correct!");
-                            ScoreSystem.correctAnswer();
-                        } else {
-                            System.out.println();
-                            printBoard();
-                            System.out.println("False!");
-                            board[row1 - 1][column1 - 1] = " 🎴 ";
-                            board[row2 - 1][column2 - 1] = " 🎴 ";
-                            False = False + 1;
-                            ScoreSystem.falseAnswer();
-                        }
-
+                    printBoard();
+                    continue;
+                } else {
+                    board[row1 - 1][column1 - 1] = " " + cards[row1 - 1][column1 - 1] + " ";
+                    printBoard();
                 }
 
+                System.out.print("row-2 (1-4): ");
+                int row2 = src.nextInt();
+                System.out.print("column-2 (1-5): ");
+                int column2 = src.nextInt();
+                // Checks if the card is already open
+                if (!board[row2 - 1][column2 - 1].equals(" 🎴 ")) {
+                    System.out.println("Already entered!!!");
+                    board[row1 - 1][column1 - 1] = " 🎴 ";
+                    System.out.println();
+
+                    printBoard();
+                } else {
+                    board[row2 - 1][column2 - 1] = " " + cards[row2 - 1][column2 - 1] + " ";
+                    printBoard();
+                    //Checks for a matching cards
+                    if (board[row1 - 1][column1 - 1].equals(board[row2 - 1][column2 - 1])) {
+                        System.out.println();
+                        printBoard();
+                        System.out.println("Correct!");
+                        ScoreSystem.correctAnswer();
+                    } else {
+                        System.out.println();
+                        printBoard();
+                        System.out.println("False!");
+                        board[row1 - 1][column1 - 1] = " 🎴 ";
+                        board[row2 - 1][column2 - 1] = " 🎴 ";
+                        False = False + 1;
+                        ScoreSystem.falseAnswer();
+                    }
+                }
             }else{
             System.out.println("Game over!!");
             ScoreSystem.scoreAnswer();
@@ -117,7 +126,7 @@ public class TheGameHard {
             }
         }
     }
-
+    //This is teh start menu for the default game mode
     public static void startMenu(){
         while (true){
             System.out.println(" press e to exit and n for new game");
@@ -141,7 +150,7 @@ public class TheGameHard {
             }
         }
     }
-
+    //This is the menu for game mode
     public static void gameMode(){
         System.out.println("Welcome to the Memory game");
         System.out.println("choose a mode \n pres 1 to play the default mode \n pres 2 to play the difficult mode ");
